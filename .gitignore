@@ -1,2 +1,11 @@
-# Ignore env
+# Node
+node_modules/
+
+# Build
+dist/
+
+# Environment variables (NUNCA subir)
 .env
+
+# Logs
+*.log
