@@ -3,9 +3,10 @@ import react from "@vitejs/plugin-react-swc";
 import { resolve } from "node:path";
 import AutoImport from "unplugin-auto-import/vite";
 
-const base = process.env.BASE_PATH || "/";
+// Se quiser alterar o base em CI, exporte BASE_PATH; senão usa fallback '/JokaTech/'
+const base = process.env.BASE_PATH || "/JokaTech/";
 const isPreview = process.env.IS_PREVIEW ? true : false;
-// https://vite.dev/config/
+
 export default defineConfig({
   define: {
     __BASE_PATH__: JSON.stringify(base),
@@ -58,7 +59,6 @@ export default defineConfig({
             "Outlet",
           ],
         },
-        // React i18n
         {
           "react-i18next": ["useTranslation", "Trans"],
         },
@@ -66,7 +66,7 @@ export default defineConfig({
       dts: true,
     }),
   ],
-  base,
+  base, // <- importante: já alimentado pela variável acima
   build: {
     sourcemap: true,
     outDir: "out",
