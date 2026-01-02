@@ -17,22 +17,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
-          node-version: 18
+          # usar Node 20.19.0 para compatibilidade com Vite 7+
+          node-version: '20.19.0'
 
       - name: Install dependencies
         run: npm ci
 
       - name: Build site
         run: npm run build
+        env:
+          # aumenta memória se o build precisar (opcional)
+          NODE_OPTIONS: --max_old_space_size=4096
 
-      - name: Package and upload Pages artifact
-        # ATUALIZADO para a versão mais recente
+      - name: Package and upload Pages artifact (path = out)
         uses: actions/upload-pages-artifact@v4
         with:
-          path: ./dist
+          # ajustado para a pasta gerada no seu build
+          path: ./out
 
   deploy:
     runs-on: ubuntu-latest
